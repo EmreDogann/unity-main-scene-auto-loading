@@ -16,7 +16,7 @@ MonoBehaviour:
   _mainSceneProvider:
     rid: 2734020624002318342
   _mainSceneLoadedHandler:
-    rid: 2734020624002318343
+    rid: 2734020624399728653
   _playmodeExitedHandler:
     rid: 2734020624399728646
   references:
@@ -25,9 +25,9 @@ MonoBehaviour:
     - rid: 2734020624002318342
       type: {class: FirstSceneInBuildSettings, ns: Ems.MainSceneAutoLoading.MainSceneProviders,
         asm: Ems.MainSceneAutoLoading.Editor}
-    - rid: 2734020624002318343
-      type: {class: LoadAllLoadedScenes, ns: Ems.MainSceneAutoLoading.MainSceneLoadedHandlers,
-        asm: Ems.MainSceneAutoLoading.Editor}
     - rid: 2734020624399728646
       type: {class: RestoreSceneManagerSetup, ns: Ems.MainSceneAutoLoading.PlaymodeExitedHandlers,
+        asm: Ems.MainSceneAutoLoading.Editor}
+    - rid: 2734020624399728653
+      type: {class: LoadAllLoadedScenesAdditive, ns: Ems.MainSceneAutoLoading.MainSceneLoadedHandlers,
         asm: Ems.MainSceneAutoLoading.Editor}
