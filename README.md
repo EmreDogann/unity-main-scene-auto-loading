@@ -29,14 +29,14 @@ Dependencies:
 ## Installation
 Install via git url by adding this entry in your **manifest.json**
 
-`"com.sag.main-scene-auto-loading": "https://github.com/STARasGAMES/unity-main-scene-auto-loading.git#upm"`
+`"com.sag.main-scene-auto-loading": "https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm"`
 
 Or using PackageManager window:
-1. copy this link `https://github.com/STARasGAMES/unity-main-scene-auto-loading.git#upm`,
+1. copy this link `https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm`,
 2. open PackageManager window,
 3. click `+` button in top-left corner,
 4. select `Add package from git URL`,
-5. in appeared field paste the link you copied before (`https://github.com/STARasGAMES/unity-main-scene-auto-loading.git#upm`).
+5. in appeared field paste the link you copied before (`https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm`).
 
 ## How it works
 After installing this package it will create `Assets/MainSceneAutoLoadingSettings.asset` asset. You can change settings by selecting this asset or by using ProjectSettings window.
@@ -169,4 +169,4 @@ public class InSceneMainSceneLoadedHandler : MonoBehaviour, IMainSceneLoadedHand
 ### IPlaymodeExitedHandler
 
 Look at the default implementation:
-https://github.com/STARasGAMES/unity-main-scene-auto-loading/blob/main/Packages/SaG.MainSceneAutoLoading/Editor/PlaymodeExitedHandlers/RestoreSceneManagerSetup.cs
+https://github.com/EmreDogann/unity-main-scene-auto-loading/blob/main/Packages/SaG.MainSceneAutoLoading/Editor/PlaymodeExitedHandlers/RestoreSceneManagerSetup.cs
