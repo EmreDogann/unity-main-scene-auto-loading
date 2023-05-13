@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading
+namespace Ems.MainSceneAutoLoading
 {
     public class LoadMainSceneArgs
     {

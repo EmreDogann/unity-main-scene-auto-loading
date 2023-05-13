@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace SaG.MainSceneAutoLoading.Utilities
+namespace Ems.MainSceneAutoLoading.Utilities
 {
     public static class SceneAssetUtility
     {

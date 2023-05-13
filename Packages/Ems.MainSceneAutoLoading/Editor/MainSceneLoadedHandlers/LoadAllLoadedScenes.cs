@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using SaG.MainSceneAutoLoading.Utilities;
+using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
-namespace SaG.MainSceneAutoLoading.MainSceneLoadedHandlers
+namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 {
     public class LoadAllLoadedScenes : IMainSceneLoadedHandler
     {

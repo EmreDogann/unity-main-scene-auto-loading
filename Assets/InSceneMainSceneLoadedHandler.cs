@@ -1,8 +1,8 @@
 ﻿#if UNITY_EDITOR // this script should not be present in builds
 using System.Collections;
-using SaG.MainSceneAutoLoading;
-using SaG.MainSceneAutoLoading.MainSceneLoadedHandlers;
-using SaG.MainSceneAutoLoading.Utilities;
+using Ems.MainSceneAutoLoading;
+using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
+using Ems.MainSceneAutoLoading.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -1,5 +1,5 @@
 {
-    "name": "SaG.MainSceneAutoLoading.Editor",
+    "name": "Ems.MainSceneAutoLoading.Editor",
     "references": [
         "Unity.EditorCoroutines.Editor"
     ],

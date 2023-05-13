@@ -1,4 +1,4 @@
-﻿namespace SaG.MainSceneAutoLoading.MainSceneLoadedHandlers
+﻿namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 {
     public interface IMainSceneLoadedHandler
     {

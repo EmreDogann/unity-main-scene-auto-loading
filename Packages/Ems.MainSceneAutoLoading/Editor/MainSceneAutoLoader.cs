@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using SaG.MainSceneAutoLoading.Settings;
-using SaG.MainSceneAutoLoading.Utilities;
+using Ems.MainSceneAutoLoading.Settings;
+using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading
+namespace Ems.MainSceneAutoLoading
 {
     public static class MainSceneAutoLoader
     {

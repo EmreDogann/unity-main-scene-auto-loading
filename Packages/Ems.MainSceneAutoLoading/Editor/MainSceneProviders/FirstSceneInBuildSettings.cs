@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using SaG.MainSceneAutoLoading.Utilities;
+using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading.MainSceneProviders
+namespace Ems.MainSceneAutoLoading.MainSceneProviders
 {
     [Serializable]
     public class FirstSceneInBuildSettings : IMainSceneProvider

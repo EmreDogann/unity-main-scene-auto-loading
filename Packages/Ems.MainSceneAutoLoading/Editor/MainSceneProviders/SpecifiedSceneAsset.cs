@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading.MainSceneProviders
+namespace Ems.MainSceneAutoLoading.MainSceneProviders
 {
     [Serializable]
     public class SpecifiedSceneAsset : IMainSceneProvider

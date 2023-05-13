@@ -1,8 +1,8 @@
-﻿using SaG.MainSceneAutoLoading.MainSceneLoadedHandlers;
-using SaG.MainSceneAutoLoading.Utilities;
+﻿using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
+using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 
-namespace SaG.MainSceneAutoLoading.PlaymodeExitedHandlers
+namespace Ems.MainSceneAutoLoading.PlaymodeExitedHandlers
 {
     public class RestoreSceneManagerSetup : IPlaymodeExitedHandler
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-namespace SaG.MainSceneAutoLoading.Utilities
+namespace Ems.MainSceneAutoLoading.Utilities
 {
     internal static class ObjectUtility
     {

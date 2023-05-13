@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace SaG.MainSceneAutoLoading.MainSceneProviders
+namespace Ems.MainSceneAutoLoading.MainSceneProviders
 {
     public interface IMainSceneProvider
     {

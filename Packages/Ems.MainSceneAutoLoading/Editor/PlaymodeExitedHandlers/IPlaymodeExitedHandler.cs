@@ -1,4 +1,4 @@
-﻿namespace SaG.MainSceneAutoLoading.PlaymodeExitedHandlers
+﻿namespace Ems.MainSceneAutoLoading.PlaymodeExitedHandlers
 {
     public interface IPlaymodeExitedHandler
     {

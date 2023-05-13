@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace SaG.MainSceneAutoLoading.Settings
+namespace Ems.MainSceneAutoLoading.Settings
 {
     public class MainSceneAutoLoadingSettingsProvider : SettingsProvider
     {

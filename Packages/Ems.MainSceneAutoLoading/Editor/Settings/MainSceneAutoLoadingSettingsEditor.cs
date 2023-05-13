@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using SaG.MainSceneAutoLoading.MainSceneLoadedHandlers;
-using SaG.MainSceneAutoLoading.MainSceneProviders;
-using SaG.MainSceneAutoLoading.PlaymodeExitedHandlers;
+using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
+using Ems.MainSceneAutoLoading.MainSceneProviders;
+using Ems.MainSceneAutoLoading.PlaymodeExitedHandlers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SaG.MainSceneAutoLoading.Settings
+namespace Ems.MainSceneAutoLoading.Settings
 {
     [CustomEditor(typeof(MainSceneAutoLoadingSettings))]
     public class MainSceneAutoLoadingSettingsEditor : Editor

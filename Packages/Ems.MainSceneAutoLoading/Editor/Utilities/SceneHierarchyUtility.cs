@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading.Utilities
+namespace Ems.MainSceneAutoLoading.Utilities
 {
     /// <summary>
     /// Editor functionalities from internal SceneHierarchyWindow and SceneHierarchy classes. 

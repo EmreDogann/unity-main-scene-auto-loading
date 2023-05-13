@@ -1,7 +1,7 @@
-﻿using SaG.MainSceneAutoLoading.Utilities;
+﻿using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 
-namespace SaG.MainSceneAutoLoading.MainSceneLoadedHandlers
+namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 {
     public class DelegateToInSceneImplementations : IMainSceneLoadedHandler
     {

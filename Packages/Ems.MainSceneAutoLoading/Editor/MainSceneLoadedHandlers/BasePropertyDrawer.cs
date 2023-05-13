@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace SaG.MainSceneAutoLoading.MainSceneLoadedHandlers
+namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 {
     public abstract class BasePropertyDrawer : PropertyDrawer
     {

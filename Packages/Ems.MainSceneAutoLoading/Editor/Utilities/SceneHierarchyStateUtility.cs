@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace SaG.MainSceneAutoLoading.Utilities
+namespace Ems.MainSceneAutoLoading.Utilities
 {
     public static class SceneHierarchyStateUtility
     {
