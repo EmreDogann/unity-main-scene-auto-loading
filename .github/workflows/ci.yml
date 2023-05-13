@@ -7,10 +7,11 @@ jobs:
   split-upm:
     name: split upm branch (force)
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     steps:
     - uses: actions/checkout@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
     - name: split upm branch
       run: |
