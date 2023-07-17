@@ -7,8 +7,14 @@ jobs:
   split-upm:
     name: split upm branch (force)
     runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+      contents: write
+      statuses: write
+      actions: write
+      checks: read
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: split upm branch
