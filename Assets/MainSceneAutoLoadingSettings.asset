@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: MainSceneAutoLoadingSettings
   m_EditorClassIdentifier: 
   Enabled: 1
+  KeepActiveSceneAsActive: 1
   _mainSceneProvider:
-    rid: 2734020624002318342
+    rid: 2734020752294543364
   _mainSceneLoadedHandler:
-    rid: 2734020624399728653
+    rid: 8197751273937960964
   _playmodeExitedHandler:
     rid: 2734020624399728646
   references:
     version: 2
     RefIds:
-    - rid: 2734020624002318342
-      type: {class: FirstSceneInBuildSettings, ns: Ems.MainSceneAutoLoading.MainSceneProviders,
-        asm: Ems.MainSceneAutoLoading.Editor}
     - rid: 2734020624399728646
       type: {class: RestoreSceneManagerSetup, ns: Ems.MainSceneAutoLoading.PlaymodeExitedHandlers,
         asm: Ems.MainSceneAutoLoading.Editor}
-    - rid: 2734020624399728653
+    - rid: 2734020752294543364
+      type: {class: SpecifiedSceneAsset, ns: Ems.MainSceneAutoLoading.MainSceneProviders,
+        asm: Ems.MainSceneAutoLoading.Editor}
+      data:
+        _sceneAsset: {fileID: 102900000, guid: 0beb7666be24a034895b6d1ff385b8ba, type: 3}
+    - rid: 8197751273937960964
       type: {class: LoadAllLoadedScenesAdditive, ns: Ems.MainSceneAutoLoading.MainSceneLoadedHandlers,
         asm: Ems.MainSceneAutoLoading.Editor}

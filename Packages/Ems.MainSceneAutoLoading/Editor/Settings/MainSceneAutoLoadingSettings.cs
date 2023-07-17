@@ -13,6 +13,7 @@ namespace Ems.MainSceneAutoLoading.Settings
         private static string AssetPathKey => $"{Application.dataPath}_MainSceneAutoLoadingSettingsPath";
 
         public bool Enabled = true;
+        public bool KeepActiveSceneAsActive = true;
 
         [SerializeReference]
         internal IMainSceneProvider _mainSceneProvider = new FirstSceneInBuildSettings();
@@ -47,6 +48,7 @@ namespace Ems.MainSceneAutoLoading.Settings
 
             settings = ScriptableObject.CreateInstance<MainSceneAutoLoadingSettings>();
             settings.Enabled = true;
+            settings.KeepActiveSceneAsActive = true;
             settings._mainSceneProvider = new FirstSceneInBuildSettings();
             settings._mainSceneLoadedHandler = new LoadAllLoadedScenes();
             settings._playmodeExitedHandler = new RestoreSceneManagerSetup();

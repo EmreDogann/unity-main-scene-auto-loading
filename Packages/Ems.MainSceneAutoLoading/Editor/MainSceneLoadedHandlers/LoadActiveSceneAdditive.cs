@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
@@ -9,8 +12,23 @@ namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
     {
         public void OnMainSceneLoaded(LoadMainSceneArgs args)
         {
-            var path = args.SceneSetups.First(scene => scene.isActive).path;
-            SceneManager.LoadScene(path, LoadSceneMode.Additive);
+            SceneSetup activeScene = args.SceneSetups.First(s => s.isActive);
+            SceneManager.LoadScene(activeScene.path, LoadSceneMode.Additive);
+
+            if (MainSceneAutoLoader.Settings.KeepActiveSceneAsActive)
+            {
+                void SceneLoadDelegate(Scene scene, LoadSceneMode loadedSceneMode)
+                {
+                    if (scene.path == activeScene.path)
+                    {
+                        SceneManager.SetActiveScene(SceneManager.GetSceneByPath(activeScene.path));
+                        SceneManager.sceneLoaded -= SceneLoadDelegate;
+                    }
+                }
+
+                SceneManager.sceneLoaded += SceneLoadDelegate;
+            }
+
             SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(args);
         }
         

@@ -24,6 +24,8 @@ namespace Ems.MainSceneAutoLoading.Settings
             DrawRealization(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings._mainSceneProvider)),
                 typeof(IMainSceneProvider));
 
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.KeepActiveSceneAsActive)));
             DrawRealization(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings._mainSceneLoadedHandler)),
                 typeof(IMainSceneLoadedHandler));
             
