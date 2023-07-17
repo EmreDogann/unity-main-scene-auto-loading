@@ -1,6 +1,6 @@
 {
   "name": "com.ems.main-scene-auto-loading",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Main Scene Auto Loading",
   "description": "Unity package that loads main (boot, master, loader) scene before entering play mode.",
   "unity": "2021.3",
