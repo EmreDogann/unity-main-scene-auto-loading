@@ -14,9 +14,13 @@ namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
     {
         public void OnMainSceneLoaded(LoadMainSceneArgs args)
         {
-            SceneSetup activeScene = args.SceneSetups.First(s => s.isActive);
-            SceneManager.LoadScene(activeScene.path, LoadSceneMode.Additive);
-            foreach (var sceneSetup in args.SceneSetups.Where(scene => scene.isLoaded && !scene.isActive))
+            SceneSetup activeScene = args.SceneSetups.FirstOrDefault(s => s.isActive && s.path != SceneManager.GetActiveScene().path);
+            if (activeScene != null)
+            {
+                SceneManager.LoadScene(activeScene.path, LoadSceneMode.Additive);
+            }
+            
+            foreach (var sceneSetup in args.SceneSetups.Where(scene => scene.isLoaded && !scene.isActive && scene.path != SceneManager.GetActiveScene().path))
             {
                 SceneManager.LoadScene(sceneSetup.path, LoadSceneMode.Additive);
             }

@@ -88,10 +88,10 @@ namespace Ems.MainSceneAutoLoading
             var currentLoadedScene =
                 SceneAssetUtility.ConvertPathToSceneAsset(EditorSceneManager.GetActiveScene().path);
 
-            if (mainScene == currentLoadedScene)
-            {
-                return;
-            }
+            // if (mainScene == currentLoadedScene)
+            // {
+            //     return;
+            // }
 
             SetPlayModeStartScene(mainScene);
 
