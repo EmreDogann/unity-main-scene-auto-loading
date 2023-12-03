@@ -29,7 +29,7 @@ Dependencies:
 ## Installation
 Install via git url by adding this entry in your **manifest.json**
 
-`"com.sag.main-scene-auto-loading": "https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm"`
+`"com.ems.main-scene-auto-loading": "https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm"`
 
 Or using PackageManager window:
 1. copy this link `https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm`,
