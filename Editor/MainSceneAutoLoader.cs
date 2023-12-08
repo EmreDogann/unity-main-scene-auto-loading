@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using Ems.MainSceneAutoLoading.Settings;
 using Ems.MainSceneAutoLoading.Utilities;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -42,6 +44,25 @@ namespace Ems.MainSceneAutoLoading
 
         [InitializeOnLoadMethod]
         private static void Initialize()
+        {
+            // no need for delay for not first load of the project
+            if (MainSceneAutoLoadingSettings.TryLoadAsset(out _))
+            {
+                InitializeInternal();
+            }
+            // delayed initialization is needed.
+            // In the case of the first load of the project (when "Library" folder does not exist) AssetDatabase won't be able to track settings asset in the project
+            // and if we try to load the settings asset now, it won't be able to load and will be overridden with default values
+            EditorCoroutineUtility.StartCoroutine(DelayedInitialize(), null);
+        }
+
+        private static IEnumerator DelayedInitialize()
+        {
+            yield return new WaitForEndOfFrame();
+            InitializeInternal();
+        }
+
+        private static void InitializeInternal()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 
