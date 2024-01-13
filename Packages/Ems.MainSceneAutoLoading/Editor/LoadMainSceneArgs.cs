@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -25,7 +26,7 @@ namespace Ems.MainSceneAutoLoading
             ExpandedScenes = expandedScenes;
         }
 
-        [System.Serializable]
+        [Serializable]
         private class SaveData
         {
             public SceneSetup[] SceneSetups;
@@ -36,7 +37,7 @@ namespace Ems.MainSceneAutoLoading
 
         public string Serialize()
         {
-            var saveData = new SaveData()
+            SaveData saveData = new SaveData
             {
                 SceneSetups = SceneSetups,
                 SelectedInHierarchyObjects = SelectedInHierarchyObjects.Select(x => x.ToString()).ToArray(),
@@ -44,20 +45,20 @@ namespace Ems.MainSceneAutoLoading
                 ExpandedScenes = ExpandedScenes
             };
 
-            var json = JsonUtility.ToJson(saveData);
+            string json = JsonUtility.ToJson(saveData);
             return json;
         }
 
         public static LoadMainSceneArgs Deserialize(string json)
         {
-            var saveData = JsonUtility.FromJson<SaveData>(json);
-            
-            var args = new LoadMainSceneArgs(
+            SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+
+            LoadMainSceneArgs args = new LoadMainSceneArgs(
                 saveData.SceneSetups,
                 ParseGlobalObjectIds(saveData.SelectedInHierarchyObjects),
                 ParseGlobalObjectIds(saveData.ExpandedInHierarchyObjects),
                 saveData.ExpandedScenes
-                );
+            );
 
             return args;
         }
@@ -65,9 +66,9 @@ namespace Ems.MainSceneAutoLoading
         private static GlobalObjectId[] ParseGlobalObjectIds(string[] stringIds)
         {
             var ids = new List<GlobalObjectId>(stringIds.Length);
-            foreach (var stringId in stringIds)
+            foreach (string stringId in stringIds)
             {
-                if (GlobalObjectId.TryParse(stringId, out var id))
+                if (GlobalObjectId.TryParse(stringId, out GlobalObjectId id))
                 {
                     ids.Add(id);
                 }
@@ -75,6 +76,5 @@ namespace Ems.MainSceneAutoLoading
 
             return ids.ToArray();
         }
-        
     }
 }

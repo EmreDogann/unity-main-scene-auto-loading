@@ -2,8 +2,6 @@
 using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
@@ -31,12 +29,12 @@ namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 
             SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(args);
         }
-        
+
         [CustomPropertyDrawer(typeof(LoadActiveSceneAdditive))]
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                $"Loads only one scene that was active(with bold name) in hierarchy before entering playmode.";
+                "Loads only one scene that was active(with bold name) in hierarchy before entering playmode.";
         }
     }
 }

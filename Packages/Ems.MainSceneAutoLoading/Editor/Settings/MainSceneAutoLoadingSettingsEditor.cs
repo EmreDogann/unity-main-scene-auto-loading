@@ -15,8 +15,8 @@ namespace Ems.MainSceneAutoLoading.Settings
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            
-            var labelWidth = EditorGUIUtility.labelWidth;
+
+            float labelWidth = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 200;
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.Enabled)));
@@ -25,10 +25,11 @@ namespace Ems.MainSceneAutoLoading.Settings
                 typeof(IMainSceneProvider));
 
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.KeepActiveSceneAsActive)));
+            EditorGUILayout.PropertyField(
+                serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.KeepActiveSceneAsActive)));
             DrawRealization(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings._mainSceneLoadedHandler)),
                 typeof(IMainSceneLoadedHandler));
-            
+
             DrawRealization(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings._playmodeExitedHandler)),
                 typeof(IPlaymodeExitedHandler));
 
@@ -40,22 +41,26 @@ namespace Ems.MainSceneAutoLoading.Settings
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(new GUIContent(serializedProperty.displayName));
-            var typeName = serializedProperty.managedReferenceFullTypename.Split('.', ' ').Last();
+            string typeName = serializedProperty.managedReferenceFullTypename.Split('.', ' ').Last();
             typeName = ObjectNames.NicifyVariableName(typeName);
             if (EditorGUILayout.DropdownButton(new GUIContent(typeName), FocusType.Keyboard, GUILayout.MinWidth(10)))
             {
-                var menu = new GenericMenu();
+                GenericMenu menu = new GenericMenu();
 
-                var foundTypes = TypeCache.GetTypesDerivedFrom(addType);
+                TypeCache.TypeCollection foundTypes = TypeCache.GetTypesDerivedFrom(addType);
                 for (int i = 0; i < foundTypes.Count; ++i)
                 {
-                    var type = foundTypes[i];
+                    Type type = foundTypes[i];
 
                     if (type.IsAbstract)
+                    {
                         continue;
-                    
+                    }
+
                     if (type.IsSubclassOf(typeof(Object)))
+                    {
                         continue;
+                    }
 
                     menu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(type.Name)), false, () =>
                     {
@@ -72,8 +77,9 @@ namespace Ems.MainSceneAutoLoading.Settings
 
                 menu.ShowAsContext();
             }
+
             EditorGUILayout.EndHorizontal();
-            
+
             EditorGUILayout.PropertyField(serializedProperty, GUIContent.none, true);
         }
     }

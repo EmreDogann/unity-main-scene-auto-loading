@@ -50,6 +50,7 @@ namespace Ems.MainSceneAutoLoading
             {
                 InitializeInternal();
             }
+
             // delayed initialization is needed.
             // In the case of the first load of the project (when "Library" folder does not exist) AssetDatabase won't be able to track settings asset in the project
             // and if we try to load the settings asset now, it won't be able to load and will be overridden with default values
@@ -72,7 +73,7 @@ namespace Ems.MainSceneAutoLoading
                 return;
             }
 
-            var scene = Settings.GetMainSceneProvider().Get();
+            SceneAsset scene = Settings.GetMainSceneProvider().Get();
             SetPlayModeStartScene(scene);
         }
 
@@ -100,15 +101,12 @@ namespace Ems.MainSceneAutoLoading
             CurrentArgs = null;
             if (!Settings.Enabled)
             {
-                Debug.Log("OnEnteringPlayMode SetPlayModeStartScene");
                 SetPlayModeStartScene(null);
                 return;
             }
 
-            var mainScene = Settings.GetMainSceneProvider().Get();
-            var currentLoadedScene =
-                SceneAssetUtility.ConvertPathToSceneAsset(EditorSceneManager.GetActiveScene().path);
-
+            SceneAsset mainScene = Settings.GetMainSceneProvider().Get();
+            // SceneAsset currentLoadedScene = SceneAssetUtility.ConvertPathToSceneAsset(SceneManager.GetActiveScene().path);
             // if (mainScene == currentLoadedScene)
             // {
             //     return;
@@ -118,12 +116,14 @@ namespace Ems.MainSceneAutoLoading
 
             var loadedScenes = EditorSceneManager.GetSceneManagerSetup();
             var selectedGameObjects = Selection.gameObjects;
-            GlobalObjectId[] selectedGameObjectsIds = new GlobalObjectId[selectedGameObjects.Length];
+            var selectedGameObjectsIds = new GlobalObjectId[selectedGameObjects.Length];
             GlobalObjectId.GetGlobalObjectIdsSlow(selectedGameObjects, selectedGameObjectsIds);
 
             var expandedInHierarchyObjects = SceneHierarchyUtility.GetExpandedGameObjects()
                 .Select(go => GlobalObjectId.GetGlobalObjectIdSlow(go)).ToArray();
             var expandedScenes = SceneHierarchyUtility.GetExpandedSceneNames();
+            expandedScenes.Add(mainScene.name);
+
             CurrentArgs = new LoadMainSceneArgs(loadedScenes, selectedGameObjectsIds, expandedInHierarchyObjects,
                 expandedScenes);
         }
@@ -140,12 +140,15 @@ namespace Ems.MainSceneAutoLoading
         private static void OnPlaymodeExited()
         {
             if (CurrentArgs != null)
+            {
                 Settings.GetPlaymodeExitedHandler().OnPlaymodeExited(CurrentArgs);
+            }
+
             CurrentArgs = null;
         }
 
         /// <summary>
-        /// Returns true if playModeStartScene was changed, otherwise, false.
+        ///     Returns true if playModeStartScene was changed, otherwise, false.
         /// </summary>
         /// <param name="sceneAsset">Scene asset</param>
         /// <returns>true if playModeStartScene was changed, otherwise, false</returns>

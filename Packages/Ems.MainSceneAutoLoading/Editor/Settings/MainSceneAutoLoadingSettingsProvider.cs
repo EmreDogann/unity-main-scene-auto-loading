@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -11,9 +10,7 @@ namespace Ems.MainSceneAutoLoading.Settings
         private Editor _editor;
 
         public MainSceneAutoLoadingSettingsProvider(string path, SettingsScope scopes,
-            IEnumerable<string> keywords = null) : base(path, scopes, keywords)
-        {
-        }
+            IEnumerable<string> keywords = null) : base(path, scopes, keywords) {}
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
@@ -29,7 +26,7 @@ namespace Ems.MainSceneAutoLoading.Settings
 
         public static bool IsSettingsAvailable()
         {
-            return MainSceneAutoLoadingSettings.TryLoadAsset(out var _);
+            return MainSceneAutoLoadingSettings.TryLoadAsset(out MainSceneAutoLoadingSettings _);
         }
 
         [SettingsProvider]
@@ -37,7 +34,7 @@ namespace Ems.MainSceneAutoLoading.Settings
         {
             if (IsSettingsAvailable())
             {
-                var provider =
+                MainSceneAutoLoadingSettingsProvider provider =
                     new MainSceneAutoLoadingSettingsProvider("Project/Main Scene Auto Loader", SettingsScope.Project);
 
                 // Automatically extract all keywords from the Styles.

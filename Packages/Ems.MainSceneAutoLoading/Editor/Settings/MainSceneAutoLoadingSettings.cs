@@ -41,12 +41,12 @@ namespace Ems.MainSceneAutoLoading.Settings
 
         internal static MainSceneAutoLoadingSettings GetOrCreate()
         {
-            if (TryLoadAsset(out var settings))
+            if (TryLoadAsset(out MainSceneAutoLoadingSettings settings))
             {
                 return settings;
             }
 
-            settings = ScriptableObject.CreateInstance<MainSceneAutoLoadingSettings>();
+            settings = CreateInstance<MainSceneAutoLoadingSettings>();
             settings.Enabled = true;
             settings.KeepActiveSceneAsActive = true;
             settings._mainSceneProvider = new FirstSceneInBuildSettings();
@@ -69,18 +69,25 @@ namespace Ems.MainSceneAutoLoading.Settings
             // try to load at the saved or default path
             settings = AssetDatabase.LoadAssetAtPath<MainSceneAutoLoadingSettings>(assetPath);
             if (settings != null)
+            {
                 return true;
+            }
 
             // if no asset at path try to find it in project's assets
-            var assetGuid = AssetDatabase.FindAssets($"t:{typeof(MainSceneAutoLoadingSettings)}").FirstOrDefault();
+            string assetGuid = AssetDatabase.FindAssets($"t:{typeof(MainSceneAutoLoadingSettings)}").FirstOrDefault();
             if (string.IsNullOrEmpty(assetGuid))
+            {
                 return false;
+            }
+
             assetPath = AssetDatabase.GUIDToAssetPath(assetGuid);
             settings = AssetDatabase.LoadAssetAtPath<MainSceneAutoLoadingSettings>(assetPath);
-            
+
             if (settings == null)
+            {
                 return false;
-            
+            }
+
             EditorPrefs.SetString(AssetPathKey, assetPath);
             return true;
         }

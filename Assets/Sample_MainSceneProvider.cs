@@ -1,6 +1,8 @@
-﻿using Ems.MainSceneAutoLoading.MainSceneProviders;
+﻿using System;
+using Ems.MainSceneAutoLoading.MainSceneProviders;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class Sample_MainSceneProvider : IMainSceneProvider
 {
@@ -16,7 +18,7 @@ public class Sample_MainSceneProvider : IMainSceneProvider
     public SceneAsset Get()
     {
         // implementation
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     [CustomPropertyDrawer(typeof(Sample_MainSceneProvider))]

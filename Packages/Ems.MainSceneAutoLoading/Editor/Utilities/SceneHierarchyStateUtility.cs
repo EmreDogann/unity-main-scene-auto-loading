@@ -12,12 +12,12 @@ namespace Ems.MainSceneAutoLoading.Utilities
     public static class SceneHierarchyStateUtility
     {
         /// <summary>
-        /// Starts EditorCoroutine that will restore previously selected and expanded GameObjects in the hierarchy.
-        /// Waits for scenes to load first.
+        ///     Starts EditorCoroutine that will restore previously selected and expanded GameObjects in the hierarchy.
+        ///     Waits for scenes to load first.
         /// </summary>
         public static EditorCoroutine StartRestoreHierarchyStateCoroutine(LoadMainSceneArgs args)
         {
-            var playmodeState = Application.isPlaying;
+            bool playmodeState = Application.isPlaying;
             return EditorCoroutineUtility.StartCoroutineOwnerless(RestoreHierarchyStateEnumerator(args, playmodeState));
         }
 
@@ -45,7 +45,7 @@ namespace Ems.MainSceneAutoLoading.Utilities
         }
 
         /// <summary>
-        /// Immediately tries to restore previously selected and expanded GameObjects. If no scene was loaded will log error and return.
+        ///     Immediately tries to restore previously selected and expanded GameObjects. If no scene was loaded will log error and return.
         /// </summary>
         /// <param name="args">LoadMainSceneArgs</param>
         public static void RestoreHierarchyStateImmediate(LoadMainSceneArgs args)
@@ -60,18 +60,18 @@ namespace Ems.MainSceneAutoLoading.Utilities
             SceneHierarchyUtility.SetScenesExpanded(args.ExpandedScenes);
 
             var ids = args.SelectedInHierarchyObjects;
-            List<GameObject> selection = new List<GameObject>(ids.Length);
+            var selection = new List<GameObject>(ids.Length);
             bool isMissingObjects = false;
-            for (var i = 0; i < ids.Length; i++)
+            for (int i = 0; i < ids.Length; i++)
             {
-                var id = ids[i];
-                var isPrefab = id.targetPrefabId != 0;
+                GlobalObjectId id = ids[i];
+                bool isPrefab = id.targetPrefabId != 0;
                 if (isPrefab && Application.isPlaying)
                 {
                     id = ConvertPrefabGidToUnpackedGid(id);
                 }
 
-                var obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id) as GameObject;
+                GameObject obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id) as GameObject;
                 if (obj == null)
                 {
                     isMissingObjects = true;
@@ -83,16 +83,16 @@ namespace Ems.MainSceneAutoLoading.Utilities
 
             Selection.objects = selection.ToArray();
 
-            for (var i = 0; i < args.ExpandedInHierarchyObjects.Length; i++)
+            for (int i = 0; i < args.ExpandedInHierarchyObjects.Length; i++)
             {
-                var id = args.ExpandedInHierarchyObjects[i];
-                var isPrefab = id.targetPrefabId != 0;
+                GlobalObjectId id = args.ExpandedInHierarchyObjects[i];
+                bool isPrefab = id.targetPrefabId != 0;
                 if (isPrefab && Application.isPlaying)
                 {
                     id = ConvertPrefabGidToUnpackedGid(id);
                 }
 
-                var obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id);
+                Object obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id);
                 if (obj == null || !(obj is GameObject))
                 {
                     isMissingObjects = true;
@@ -104,7 +104,8 @@ namespace Ems.MainSceneAutoLoading.Utilities
 
             if (isMissingObjects)
             {
-                Debug.LogError("Some selected or expanded objects are missing. Most likely they are destroyed during Awake.");
+                Debug.LogWarning(
+                    "Some selected or expanded objects are missing. Most likely they are destroyed during Awake.");
             }
         }
 

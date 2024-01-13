@@ -9,16 +9,16 @@ namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
     {
         public void OnMainSceneLoaded(LoadMainSceneArgs args)
         {
-            var path = args.SceneSetups.First(scene => scene.isActive).path;
+            string path = args.SceneSetups.First(scene => scene.isActive).path;
             SceneManager.LoadScene(path);
             SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(args);
         }
-        
+
         [CustomPropertyDrawer(typeof(LoadActiveScene))]
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                $"Loads only one scene that was active(with bold name) in hierarchy before entering playmode.";
+                "Loads only one scene that was active(with bold name) in hierarchy before entering playmode.";
         }
     }
 }
