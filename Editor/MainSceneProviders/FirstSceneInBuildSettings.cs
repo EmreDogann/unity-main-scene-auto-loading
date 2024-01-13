@@ -11,14 +11,15 @@ namespace Ems.MainSceneAutoLoading.MainSceneProviders
     {
         public SceneAsset Get()
         {
-            var editorBuildSettingsScene = EditorBuildSettings.scenes.FirstOrDefault(x => x.enabled);
+            EditorBuildSettingsScene editorBuildSettingsScene =
+                EditorBuildSettings.scenes.FirstOrDefault(x => x.enabled);
             if (editorBuildSettingsScene == null)
             {
                 Debug.LogError("Cannot provide main scene, because there is no enabled scene in build settings.");
                 return null;
             }
 
-            var path = editorBuildSettingsScene.path;
+            string path = editorBuildSettingsScene.path;
             SceneAsset sceneAsset = SceneAssetUtility.ConvertPathToSceneAsset(path);
             return sceneAsset;
         }
@@ -34,22 +35,23 @@ namespace Ems.MainSceneAutoLoading.MainSceneProviders
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.indentLevel ++;
+            EditorGUI.indentLevel++;
 
-            var sceneLabel = new GUIContent("There is no enabled scene in Build Settings!!!");
+            GUIContent sceneLabel = new GUIContent("There is no enabled scene in Build Settings!!!");
             SceneAsset mainSceneAsset = null;
             GUI.enabled = false;
-            var firstScene = EditorBuildSettings.scenes.FirstOrDefault(s => s.enabled);
+            EditorBuildSettingsScene firstScene = EditorBuildSettings.scenes.FirstOrDefault(s => s.enabled);
             if (firstScene != null)
             {
-                sceneLabel = new GUIContent("Scene that will be used as main scene", "Scene that will be used as main scene");
+                sceneLabel = new GUIContent("Scene that will be used as main scene",
+                    "Scene that will be used as main scene");
                 mainSceneAsset = SceneAssetUtility.ConvertPathToSceneAsset(firstScene.path);
             }
 
             EditorGUI.ObjectField(position, sceneLabel, mainSceneAsset, typeof(SceneAsset), false);
             GUI.enabled = true;
 
-            EditorGUI.indentLevel --;
+            EditorGUI.indentLevel--;
         }
     }
 }

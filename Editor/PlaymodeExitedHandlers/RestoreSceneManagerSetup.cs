@@ -12,12 +12,12 @@ namespace Ems.MainSceneAutoLoading.PlaymodeExitedHandlers
             // EditorSceneManager.RestoreSceneManagerSetup(args.SceneSetups);
             SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(args);
         }
-        
+
         [CustomPropertyDrawer(typeof(RestoreSceneManagerSetup))]
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                $"Default. Will try to restore hierarchy state(loaded scenes, selected objects, objects` expanding) that was before entering playmode.";
+                "Default. Will try to restore hierarchy state(loaded scenes, selected objects, objects` expanding) that was before entering playmode.";
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
         public void OnMainSceneLoaded(LoadMainSceneArgs args)
         {
             var handlers = ObjectUtility.FindInterfacesOfType<IMainSceneLoadedHandler>();
-            foreach (var handler in handlers)
+            foreach (IMainSceneLoadedHandler handler in handlers)
             {
                 handler.OnMainSceneLoaded(args);
             }

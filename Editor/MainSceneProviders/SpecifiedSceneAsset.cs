@@ -14,7 +14,7 @@ namespace Ems.MainSceneAutoLoading.MainSceneProviders
         {
             _sceneAsset = null;
         }
-        
+
         public SpecifiedSceneAsset(SceneAsset sceneAsset)
         {
             _sceneAsset = sceneAsset;
@@ -25,7 +25,7 @@ namespace Ems.MainSceneAutoLoading.MainSceneProviders
             return _sceneAsset;
         }
     }
-    
+
     [CustomPropertyDrawer(typeof(SpecifiedSceneAsset), true)]
     internal class ConcreteMainSceneProviderPropertyDrawer : PropertyDrawer
     {
@@ -38,11 +38,11 @@ namespace Ems.MainSceneAutoLoading.MainSceneProviders
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.indentLevel ++;
+            EditorGUI.indentLevel++;
 
             EditorGUI.PropertyField(position, property.FindPropertyRelative("_sceneAsset"));
 
-            EditorGUI.indentLevel --;
+            EditorGUI.indentLevel--;
 
             EditorGUI.EndProperty();
         }
