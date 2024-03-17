@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Ems.MainSceneAutoLoading.Settings;
 using Ems.MainSceneAutoLoading.Utilities;
@@ -66,6 +67,7 @@ namespace Ems.MainSceneAutoLoading
         private static void InitializeInternal()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            EditorApplication.pauseStateChanged += PauseStateChanged;
 
             if (!Settings.Enabled)
             {
@@ -90,6 +92,24 @@ namespace Ems.MainSceneAutoLoading
                 case PlayModeStateChange.EnteredPlayMode:
                     break;
                 case PlayModeStateChange.ExitingPlayMode:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+        private static void PauseStateChanged(PauseState state)
+        {
+            switch (state)
+            {
+                case PauseState.Paused:
+                    if (Application.isPlaying)
+                    {
+                        SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(CurrentArgs);
+                    }
+
+                    break;
+                case PauseState.Unpaused:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -131,6 +151,7 @@ namespace Ems.MainSceneAutoLoading
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void OnMainSceneLoaded()
         {
+            SceneHierarchyUtility.SetScenesExpanded(new List<string> { EditorSceneManager.playModeStartScene.name });
             if (CurrentArgs != null)
             {
                 Settings.GetLoadMainSceneHandler().OnMainSceneLoaded(CurrentArgs);

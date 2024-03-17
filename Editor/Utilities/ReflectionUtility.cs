@@ -68,7 +68,6 @@ namespace Ems.MainSceneAutoLoading.Utilities
             return lambda.Compile();
         }
 
-
         /// <summary>
         ///     Compile a lambda that will invoke the specified method. Method must be void return and must accept two parameters.
         /// </summary>
