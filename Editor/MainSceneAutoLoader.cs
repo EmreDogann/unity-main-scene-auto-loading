@@ -151,9 +151,10 @@ namespace Ems.MainSceneAutoLoading
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void OnMainSceneLoaded()
         {
-            SceneHierarchyUtility.SetScenesExpanded(new List<string> { EditorSceneManager.playModeStartScene.name });
             if (CurrentArgs != null)
             {
+                SceneHierarchyUtility.SetScenesExpanded(new List<string>
+                    { EditorSceneManager.playModeStartScene.name });
                 Settings.GetLoadMainSceneHandler().OnMainSceneLoaded(CurrentArgs);
             }
         }
