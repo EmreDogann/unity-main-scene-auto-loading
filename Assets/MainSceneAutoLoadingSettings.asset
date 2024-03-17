@@ -17,21 +17,21 @@ MonoBehaviour:
   _mainSceneProvider:
     rid: 6054754744874303494
   _mainSceneLoadedHandler:
-    rid: 6054754744874303492
+    rid: 6054754745815662594
   _playmodeExitedHandler:
     rid: 7193167014053019650
   references:
     version: 2
     RefIds:
-    - rid: 6054754744874303492
-      type: {class: LoadAllLoadedScenesAdditive, ns: Ems.MainSceneAutoLoading.MainSceneLoadedHandlers,
-        asm: Ems.MainSceneAutoLoading.Editor}
-      data: 
     - rid: 6054754744874303494
       type: {class: SpecifiedSceneAsset, ns: Ems.MainSceneAutoLoading.MainSceneProviders,
         asm: Ems.MainSceneAutoLoading.Editor}
       data:
         _sceneAsset: {fileID: 102900000, guid: 7432988872b170b4d9f2f0e2d57b98fa, type: 3}
+    - rid: 6054754745815662594
+      type: {class: LoadAllLoadedScenesAdditive, ns: Ems.MainSceneAutoLoading.MainSceneLoadedHandlers,
+        asm: Ems.MainSceneAutoLoading.Editor}
+      data: 
     - rid: 7193167014053019650
       type: {class: RestoreSceneManagerSetup, ns: Ems.MainSceneAutoLoading.PlaymodeExitedHandlers,
         asm: Ems.MainSceneAutoLoading.Editor}
