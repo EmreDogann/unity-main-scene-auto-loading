@@ -14,7 +14,6 @@ namespace Ems.MainSceneAutoLoading.Settings
 
         public bool Enabled = true;
         public bool KeepActiveSceneAsActive = true;
-        public bool enableCrossSceneReferenceSupport;
 
         [SerializeReference]
         internal IMainSceneProvider _mainSceneProvider = new FirstSceneInBuildSettings();
@@ -50,7 +49,6 @@ namespace Ems.MainSceneAutoLoading.Settings
             settings = CreateInstance<MainSceneAutoLoadingSettings>();
             settings.Enabled = true;
             settings.KeepActiveSceneAsActive = true;
-            settings.enableCrossSceneReferenceSupport = false;
             settings._mainSceneProvider = new FirstSceneInBuildSettings();
             settings._mainSceneLoadedHandler = new LoadAllLoadedScenes();
             settings._playmodeExitedHandler = new RestoreSceneManagerSetup();
