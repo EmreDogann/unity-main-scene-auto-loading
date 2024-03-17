@@ -155,16 +155,7 @@ namespace Ems.MainSceneAutoLoading
             {
                 SceneHierarchyUtility.SetScenesExpanded(new List<string>
                     { EditorSceneManager.playModeStartScene.name });
-
-                bool originalCrossSceneReferenceValue = EditorSceneManager.preventCrossSceneReferences;
-                if (Settings.enableCrossSceneReferenceSupport)
-                {
-                    EditorSceneManager.preventCrossSceneReferences = false;
-                }
-
                 Settings.GetLoadMainSceneHandler().OnMainSceneLoaded(CurrentArgs);
-
-                EditorSceneManager.preventCrossSceneReferences = originalCrossSceneReferenceValue;
             }
         }
 

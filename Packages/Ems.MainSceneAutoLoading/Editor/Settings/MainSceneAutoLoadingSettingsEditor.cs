@@ -27,8 +27,6 @@ namespace Ems.MainSceneAutoLoading.Settings
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(
                 serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.KeepActiveSceneAsActive)));
-            EditorGUILayout.PropertyField(
-                serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings.enableCrossSceneReferenceSupport)));
             DrawRealization(serializedObject.FindProperty(nameof(MainSceneAutoLoadingSettings._mainSceneLoadedHandler)),
                 typeof(IMainSceneLoadedHandler));
 
