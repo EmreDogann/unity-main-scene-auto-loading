@@ -18,8 +18,11 @@ namespace Ems.MainSceneAutoLoading.Utilities
         private static Func<object, object> _sceneHierarchyGetter;
         private static Func<object, List<GameObject>> _expandedGameObjectGetter;
         private static Func<object, List<string>> _expandedSceneNamesGetter;
+#if UNITY_6000_2_OR_NEWER
+        private static Action<object, EntityId, bool> _setExpandedMethod;
+#else
         private static Action<object, int, bool> _setExpandedMethod;
-        private static Action<object, int, bool> _setExpandedRecursiveMethod;
+#endif
         private static Action<object, List<string>> _setScenesExpandedMethod;
 
         [InitializeOnLoadMethod]
@@ -37,11 +40,13 @@ namespace Ems.MainSceneAutoLoading.Utilities
             _expandedSceneNamesGetter = ReflectionUtility.BuildMethodInvoker<object, List<string>>(
                 sceneHierarchyType, "GetExpandedSceneNames", BindingFlags.NonPublic | BindingFlags.Instance);
 
+#if UNITY_6000_2_OR_NEWER
+            _setExpandedMethod = ReflectionUtility.BuildMethodInvoker_VoidReturn<object, EntityId, bool>(
+                sceneHierarchyType, "ExpandTreeViewItem", BindingFlags.NonPublic | BindingFlags.Instance);
+#else
             _setExpandedMethod = ReflectionUtility.BuildMethodInvoker_VoidReturn<object, int, bool>(
                 sceneHierarchyType, "ExpandTreeViewItem", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            _setExpandedRecursiveMethod = ReflectionUtility.BuildMethodInvoker_VoidReturn<object, int, bool>(
-                sceneHierarchyType, "SetExpandedRecursive", BindingFlags.Public | BindingFlags.Instance);
+#endif
 
             _setScenesExpandedMethod = ReflectionUtility.BuildMethodInvoker_VoidReturn<object, List<string>>(
                 sceneHierarchyType, "SetScenesExpanded", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -79,31 +84,11 @@ namespace Ems.MainSceneAutoLoading.Utilities
             object sceneHierarchy = GetSceneHierarchy();
             if (sceneHierarchy != null)
             {
+#if UNITY_6000_2_OR_NEWER
+                _setExpandedMethod(sceneHierarchy, go.GetEntityId(), expand);
+#else
                 _setExpandedMethod(sceneHierarchy, go.GetInstanceID(), expand);
-            }
-        }
-
-        /// <summary>
-        ///     Set the target Scene as expanded (aka unfolded) in the Hierarchy view.
-        /// </summary>
-        public static void SetExpanded(Scene scene, bool expand)
-        {
-            object sceneHierarchy = GetSceneHierarchy();
-            if (sceneHierarchy != null)
-            {
-                _setExpandedMethod(sceneHierarchy, scene.handle, expand);
-            }
-        }
-
-        /// <summary>
-        ///     Set the target GameObject and all children as expanded (aka unfolded) in the Hierarchy view.
-        /// </summary>
-        public static void SetExpandedRecursive(GameObject go, bool expand)
-        {
-            object sceneHierarchy = GetSceneHierarchy();
-            if (sceneHierarchy != null)
-            {
-                _setExpandedRecursiveMethod(sceneHierarchy, go.GetInstanceID(), expand);
+#endif
             }
         }
 
@@ -129,7 +114,7 @@ namespace Ems.MainSceneAutoLoading.Utilities
         {
             if (HasOpenInstances(typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow")))
             {
-                // For it to open, so that it the current focused window.
+                // Execute the hierarchy open command, so that we can retrieve it via focusedWindow.
                 EditorApplication.ExecuteMenuItem("Window/General/Hierarchy");
                 return EditorWindow.focusedWindow;
             }
