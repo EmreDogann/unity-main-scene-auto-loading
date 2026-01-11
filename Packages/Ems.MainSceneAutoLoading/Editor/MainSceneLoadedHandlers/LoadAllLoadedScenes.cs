@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Ems.MainSceneAutoLoading.MainSceneLoadedHandlers
 {
+    [Serializable]
     public class LoadAllLoadedScenes : IMainSceneLoadedHandler
     {
         public void OnMainSceneLoaded(LoadMainSceneArgs args)

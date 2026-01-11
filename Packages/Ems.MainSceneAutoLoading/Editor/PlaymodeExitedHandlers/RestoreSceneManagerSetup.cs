@@ -1,9 +1,11 @@
-﻿using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
+﻿using System;
+using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
 using Ems.MainSceneAutoLoading.Utilities;
 using UnityEditor;
 
 namespace Ems.MainSceneAutoLoading.PlaymodeExitedHandlers
 {
+    [Serializable]
     public class RestoreSceneManagerSetup : IPlaymodeExitedHandler
     {
         public void OnPlaymodeExited(LoadMainSceneArgs args)
