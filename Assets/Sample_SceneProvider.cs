@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class Sample_MainSceneProvider : ISceneProvider
+public class Sample_SceneProvider : ISceneProvider
 {
     [SerializeField]
     private bool _setting1;
@@ -21,8 +21,8 @@ public class Sample_MainSceneProvider : ISceneProvider
         throw new NotImplementedException();
     }
 
-    [CustomPropertyDrawer(typeof(Sample_MainSceneProvider))]
-    public class Sample_MainSceneProviderPropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(Sample_SceneProvider))]
+    public class Sample_SceneProviderPropertyDrawer : PropertyDrawer
     {
         private const int FieldsCount = 4;
         private const int FieldHeightSelf = 18;

@@ -16,23 +16,23 @@ MonoBehaviour:
   KeepActiveSceneAsActive: 1
   PreserveHierarchyState: 1
   sceneProvider:
-    rid: 4656394642804441147
+    rid: 4656394642981912648
   sceneLoadedHandler:
-    rid: 4656394642804441148
-  _playmodeExitedHandler:
-    rid: 4656394642804441149
+    rid: 4656394642981912643
+  playmodeExitHandler:
+    rid: 4656394642981912644
   references:
     version: 2
     RefIds:
-    - rid: 4656394642804441147
+    - rid: 4656394642981912643
+      type: {class: LoadActiveSceneAdditive, ns: EmreeDev.SceneBootstrapper.SceneLoadedHandlers,
+        asm: EmreeDev.SceneBootstrapper.Editor}
+      data: 
+    - rid: 4656394642981912644
+      type: {class: RestoreSceneManagerSetup, ns: EmreeDev.SceneBootstrapper.PlaymodeExitHandlers,
+        asm: EmreeDev.SceneBootstrapper.Editor}
+      data: 
+    - rid: 4656394642981912648
       type: {class: FirstSceneInBuildSettings, ns: EmreeDev.SceneBootstrapper.SceneProviders,
-        asm: EmreeDev.SceneBootstrapper.Editor}
-      data: 
-    - rid: 4656394642804441148
-      type: {class: LoadAllLoadedScenes, ns: EmreeDev.SceneBootstrapper.SceneLoadedHandlers,
-        asm: EmreeDev.SceneBootstrapper.Editor}
-      data: 
-    - rid: 4656394642804441149
-      type: {class: RestoreSceneManagerSetup, ns: EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers,
         asm: EmreeDev.SceneBootstrapper.Editor}
       data: 

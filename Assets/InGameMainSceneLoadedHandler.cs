@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR // this script should not be present in builds
+﻿// This script should not be present in builds!
+#if UNITY_EDITOR
 using System.Collections;
 using EmreeDev.SceneBootstrapper;
 using EmreeDev.SceneBootstrapper.SceneLoadedHandlers;
@@ -6,11 +7,11 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InSceneMainSceneLoadedHandler : MonoBehaviour, ISceneLoadedHandler
+public class InGameSceneLoadedHandler : MonoBehaviour, ISceneLoadedHandler
 {
-    public void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData)
+    public void OnSceneLoaded(SceneBootstrapperData bootstrapperData)
     {
-        Debug.Log("OnMainSceneLoaded! Now decide what to do with bootstrapperData.SceneSetups...");
+        Debug.Log("OnSceneLoaded! Now decide what to do with bootstrapperData.SceneSetups...");
         StartCoroutine(LoadDesiredScenes(bootstrapperData));
     }
 

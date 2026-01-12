@@ -4,14 +4,14 @@ using EmreeDev.SceneBootstrapper.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers
+namespace EmreeDev.SceneBootstrapper.PlaymodeExitHandlers
 {
     [Serializable]
-    public class RestoreSceneManagerSetup : IPlaymodeExitedHandler
+    public class RestoreSceneManagerSetup : IPlaymodeExitHandler
     {
-        public void OnPlaymodeExited(SceneBootstrapperData bootstrapperData)
+        public void OnPlaymodeExit(SceneBootstrapperData bootstrapperData)
         {
-            // by not calling this we let Unity restore unsaved changes in the scene
+            // By not calling this we let Unity restore unsaved changes in the scene
             // EditorSceneManager.RestoreSceneManagerSetup(bootstrapperData.SceneSetups);
         }
 
@@ -19,7 +19,7 @@ namespace EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                "Default. Will try to restore hierarchy state (loaded scenes, selected & expanded objects) from before entering playmode.";
+                "Does nothing. Intended as a template to extend from.";
         }
     }
 }
