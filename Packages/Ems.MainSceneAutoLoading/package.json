@@ -1,10 +1,9 @@
 {
   "name": "com.ems.main-scene-auto-loading",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "displayName": "Main Scene Auto Loading",
   "description": "Unity package that loads main (boot, master, loader) scene before entering play mode.",
-  "unity": "2021.3",
-  "unityRelease": "23f1",
+  "unity": "6000.3",
   "keywords": [
     "tool"
   ],
@@ -12,7 +11,6 @@
     "name": "Emre Dogan",
     "url": "https://github.com/EmreDogann"
   },
-  "type": "tool",
   "documentationUrl": "https://github.com/EmreDogann/unity-main-scene-auto-loading",
   "licensesUrl": "https://github.com/EmreDogann/unity-main-scene-auto-loading/blob/main/LICENSE",
   "dependencies": {
