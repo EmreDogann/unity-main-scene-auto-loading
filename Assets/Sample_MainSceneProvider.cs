@@ -1,10 +1,10 @@
 ﻿using System;
-using Ems.MainSceneAutoLoading.MainSceneProviders;
+using EmreeDev.SceneBootstrapper.SceneProviders;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class Sample_MainSceneProvider : IMainSceneProvider
+public class Sample_MainSceneProvider : ISceneProvider
 {
     [SerializeField]
     private bool _setting1;

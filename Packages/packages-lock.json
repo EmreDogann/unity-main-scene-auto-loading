@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.ems.main-scene-auto-loading": {
-      "version": "file:Ems.MainSceneAutoLoading",
+    "com.emreedev.scenebootstrapper": {
+      "version": "file:com.EmreeDev.SceneBootstrapper",
       "depth": 0,
       "source": "embedded",
       "dependencies": {

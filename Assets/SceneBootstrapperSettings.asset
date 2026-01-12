@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 240724127d144ad78b6b272c8e616a35, type: 3}
+  m_Name: SceneBootstrapperSettings
+  m_EditorClassIdentifier: EmreeDev.SceneBootstrapper.Editor::EmreeDev.SceneBootstrapper.Settings.SceneBootstrapperSettings
+  Enabled: 1
+  KeepActiveSceneAsActive: 1
+  PreserveHierarchyState: 1
+  sceneProvider:
+    rid: 4656394642804441147
+  sceneLoadedHandler:
+    rid: 4656394642804441148
+  _playmodeExitedHandler:
+    rid: 4656394642804441149
+  references:
+    version: 2
+    RefIds:
+    - rid: 4656394642804441147
+      type: {class: FirstSceneInBuildSettings, ns: EmreeDev.SceneBootstrapper.SceneProviders,
+        asm: EmreeDev.SceneBootstrapper.Editor}
+      data: 
+    - rid: 4656394642804441148
+      type: {class: LoadAllLoadedScenes, ns: EmreeDev.SceneBootstrapper.SceneLoadedHandlers,
+        asm: EmreeDev.SceneBootstrapper.Editor}
+      data: 
+    - rid: 4656394642804441149
+      type: {class: RestoreSceneManagerSetup, ns: EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers,
+        asm: EmreeDev.SceneBootstrapper.Editor}
+      data: 

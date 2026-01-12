@@ -1,0 +1,19 @@
+{
+  "name": "com.emreedev.scenebootstrapper",
+  "version": "1.0.7",
+  "displayName": "Unity Editor Scene Bootstrapper",
+  "description": "Unity package that loads main (boot, master, loader) scene before entering play mode.",
+  "unity": "6000.3",
+  "keywords": [
+    "tool"
+  ],
+  "author": {
+    "name": "Emre Dogan",
+    "url": "https://github.com/EmreDogann"
+  },
+  "documentationUrl": "https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper",
+  "licensesUrl": "https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper/blob/main/LICENSE",
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0"
+  }
+}

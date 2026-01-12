@@ -1,30 +1,26 @@
 ﻿#if UNITY_EDITOR // this script should not be present in builds
 using System.Collections;
-using Ems.MainSceneAutoLoading;
-using Ems.MainSceneAutoLoading.MainSceneLoadedHandlers;
-using Ems.MainSceneAutoLoading.Utilities;
+using EmreeDev.SceneBootstrapper;
+using EmreeDev.SceneBootstrapper.SceneLoadedHandlers;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InSceneMainSceneLoadedHandler : MonoBehaviour, IMainSceneLoadedHandler
+public class InSceneMainSceneLoadedHandler : MonoBehaviour, ISceneLoadedHandler
 {
-    public void OnMainSceneLoaded(LoadMainSceneArgs args)
+    public void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData)
     {
-        Debug.Log("OnMainSceneLoaded! Now decide what to do with args.SceneSetups...");
-        StartCoroutine(LoadDesiredScenes(args));
+        Debug.Log("OnMainSceneLoaded! Now decide what to do with bootstrapperData.SceneSetups...");
+        StartCoroutine(LoadDesiredScenes(bootstrapperData));
     }
 
-    private IEnumerator LoadDesiredScenes(LoadMainSceneArgs args)
+    private IEnumerator LoadDesiredScenes(SceneBootstrapperData bootstrapperData)
     {
         yield return new WaitForSeconds(1f);
-        foreach (SceneSetup sceneSetup in args.SceneSetups)
+        foreach (SceneSetup sceneSetup in bootstrapperData.SceneSetups)
         {
             SceneManager.LoadScene(sceneSetup.path, LoadSceneMode.Additive);
         }
-
-        // call this to restore previously selected and expanded GameObjects 
-        SceneHierarchyStateUtility.StartRestoreHierarchyStateCoroutine(args);
     }
 }
 #endif
