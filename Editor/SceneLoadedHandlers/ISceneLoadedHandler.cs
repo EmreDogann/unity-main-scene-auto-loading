@@ -2,6 +2,6 @@
 {
     public interface ISceneLoadedHandler
     {
-        void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData);
+        void OnSceneLoaded(SceneBootstrapperData bootstrapperData);
     }
 }

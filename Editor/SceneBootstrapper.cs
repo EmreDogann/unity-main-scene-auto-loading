@@ -188,7 +188,7 @@ namespace EmreeDev.SceneBootstrapper
                         { EditorSceneManager.playModeStartScene.name });
                 }
 
-                Settings.GetLoadMainSceneHandler().OnMainSceneLoaded(CurrentBootstrapperData);
+                Settings.GetLoadMainSceneHandler().OnSceneLoaded(CurrentBootstrapperData);
 
                 if (Settings.PreserveHierarchyState)
                 {
@@ -201,7 +201,7 @@ namespace EmreeDev.SceneBootstrapper
         {
             if (CurrentBootstrapperData != null)
             {
-                Settings.GetPlaymodeExitedHandler().OnPlaymodeExited(CurrentBootstrapperData);
+                Settings.GetPlaymodeExitedHandler().OnPlaymodeExit(CurrentBootstrapperData);
             }
 
             if (Settings.PreserveHierarchyState)

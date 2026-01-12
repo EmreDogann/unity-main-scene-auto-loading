@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using EmreeDev.SceneBootstrapper.SceneLoadedHandlers;
 using EmreeDev.SceneBootstrapper.SceneProviders;
-using EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers;
+using EmreeDev.SceneBootstrapper.PlaymodeExitHandlers;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ namespace EmreeDev.SceneBootstrapper.Settings
         internal ISceneLoadedHandler sceneLoadedHandler = new LoadAllLoadedScenes();
 
         [SerializeReference]
-        internal IPlaymodeExitedHandler _playmodeExitedHandler = new RestoreSceneManagerSetup();
+        internal IPlaymodeExitHandler playmodeExitHandler = new RestoreSceneManagerSetup();
 
         internal ISceneProvider GetMainSceneProvider()
         {
@@ -39,9 +39,9 @@ namespace EmreeDev.SceneBootstrapper.Settings
             return sceneLoadedHandler;
         }
 
-        internal IPlaymodeExitedHandler GetPlaymodeExitedHandler()
+        internal IPlaymodeExitHandler GetPlaymodeExitedHandler()
         {
-            return _playmodeExitedHandler;
+            return playmodeExitHandler;
         }
 
         internal static SceneBootstrapperSettings GetOrCreate()
@@ -56,7 +56,7 @@ namespace EmreeDev.SceneBootstrapper.Settings
             settings.KeepActiveSceneAsActive = true;
             settings.sceneProvider = new FirstSceneInBuildSettings();
             settings.sceneLoadedHandler = new LoadAllLoadedScenes();
-            settings._playmodeExitedHandler = new RestoreSceneManagerSetup();
+            settings.playmodeExitHandler = new RestoreSceneManagerSetup();
             AssetDatabase.CreateAsset(settings, DefaultAssetPath);
             AssetDatabase.SaveAssets();
 

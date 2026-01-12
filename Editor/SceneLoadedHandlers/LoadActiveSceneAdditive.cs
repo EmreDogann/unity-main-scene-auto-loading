@@ -1,13 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
 namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
 {
+    [Serializable]
     public class LoadActiveSceneAdditive : ISceneLoadedHandler
     {
-        public void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData)
+        public void OnSceneLoaded(SceneBootstrapperData bootstrapperData)
         {
             SceneSetup activeScene = bootstrapperData.SceneSetups.First(s => s.isActive);
             SceneManager.LoadScene(activeScene.path, LoadSceneMode.Additive);
@@ -31,7 +33,7 @@ namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                "Loads only one scene that was active(with bold name) in hierarchy before entering playmode.";
+                "Additively loads only the active scene in the hierarchy.";
         }
     }
 }

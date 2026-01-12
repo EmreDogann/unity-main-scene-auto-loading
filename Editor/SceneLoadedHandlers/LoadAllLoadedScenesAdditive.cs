@@ -12,7 +12,7 @@ namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
     [Serializable]
     public class LoadAllLoadedScenesAdditive : ISceneLoadedHandler
     {
-        public void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData)
+        public void OnSceneLoaded(SceneBootstrapperData bootstrapperData)
         {
             SceneSetup activeScene =
                 bootstrapperData.SceneSetups.FirstOrDefault(s => s.isActive && s.path != SceneManager.GetActiveScene().path);
@@ -64,7 +64,7 @@ namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
         public sealed class Drawer : BasePropertyDrawer
         {
             public override string Description =>
-                "Loads all scene that was loaded in hierarchy before entering playmode.";
+                "Additively loads all scenes that were loaded in the hierarchy before entering playmode. Loads active scene first.";
         }
     }
 }

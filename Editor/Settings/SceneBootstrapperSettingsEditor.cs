@@ -2,7 +2,7 @@
 using System.Linq;
 using EmreeDev.SceneBootstrapper.SceneLoadedHandlers;
 using EmreeDev.SceneBootstrapper.SceneProviders;
-using EmreeDev.SceneBootstrapper.PlaymodeExitedHandlers;
+using EmreeDev.SceneBootstrapper.PlaymodeExitHandlers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -34,8 +34,8 @@ namespace EmreeDev.SceneBootstrapper.Settings
                 DrawRealization(serializedObject.FindProperty(nameof(SceneBootstrapperSettings.sceneLoadedHandler)),
                     typeof(ISceneLoadedHandler));
 
-                DrawRealization(serializedObject.FindProperty(nameof(SceneBootstrapperSettings._playmodeExitedHandler)),
-                    typeof(IPlaymodeExitedHandler));
+                DrawRealization(serializedObject.FindProperty(nameof(SceneBootstrapperSettings.playmodeExitHandler)),
+                    typeof(IPlaymodeExitHandler));
 
                 EditorGUIUtility.labelWidth = labelWidth;
             }

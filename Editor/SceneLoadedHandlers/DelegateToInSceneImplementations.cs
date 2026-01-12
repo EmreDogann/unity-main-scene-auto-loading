@@ -1,16 +1,18 @@
-﻿using EmreeDev.SceneBootstrapper.Utilities;
+﻿using System;
+using EmreeDev.SceneBootstrapper.Utilities;
 using UnityEditor;
 
 namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
 {
+    [Serializable]
     public class DelegateToInSceneImplementations : ISceneLoadedHandler
     {
-        public void OnMainSceneLoaded(SceneBootstrapperData bootstrapperData)
+        public void OnSceneLoaded(SceneBootstrapperData bootstrapperData)
         {
             var handlers = ObjectUtility.FindInterfacesOfType<ISceneLoadedHandler>();
             foreach (ISceneLoadedHandler handler in handlers)
             {
-                handler.OnMainSceneLoaded(bootstrapperData);
+                handler.OnSceneLoaded(bootstrapperData);
             }
         }
 
@@ -19,7 +21,7 @@ namespace EmreeDev.SceneBootstrapper.SceneLoadedHandlers
         {
             public override string Description =>
                 $"Finds all implementations of {nameof(ISceneLoadedHandler)} " +
-                $"in the main scene and calls '{nameof(ISceneLoadedHandler.OnMainSceneLoaded)}()' on them.";
+                $"in the main scene and calls '{nameof(ISceneLoadedHandler.OnSceneLoaded)}()'.";
         }
     }
 }
