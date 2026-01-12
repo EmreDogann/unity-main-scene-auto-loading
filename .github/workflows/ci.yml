@@ -31,4 +31,4 @@ jobs:
         fi
         git push -f -u origin upm
       env:
-        PKG_ROOT: Packages/EmreeDev.SceneBootstrapper
+        PKG_ROOT: Packages/com.EmreeDev.SceneBootstrapper
