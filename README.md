@@ -1,7 +1,7 @@
 # Fork Updates
 See [Fork Changes](#Fork-Changes) section below for details.
 
-# Main Scene Auto Loading
+# Unity Editor Scene Bootstrapper
 Main, initial, loader, boot, bootstrap - you name it.
 
 Whenever you enter playmode this tool firstly loads the main scene, and only after that loads desired scene(s). 
@@ -29,7 +29,7 @@ Dependencies:
  + EditorCoroutines package, [docs](https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html)
 
 Notes:
- - Does not yet support the New UITK-based hierarchy introduced in Unity 6.3 LTS.
+ - Does not yet support the new UITK-based hierarchy introduced in Unity 6.3 LTS.
 
 ## Installation
 Install via git url by adding this entry in your **manifest.json**
