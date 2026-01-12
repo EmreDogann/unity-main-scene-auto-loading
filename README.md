@@ -1,28 +1,13 @@
-# Fork Updates
-See [Fork Changes](#Fork-Changes) section below for details.
-
 # Unity Editor Scene Bootstrapper
-Main, initial, loader, boot, bootstrap - you name it.
-
-Whenever you enter playmode this tool firstly loads the main scene, and only after that loads desired scene(s). 
-
-![image](https://user-images.githubusercontent.com/23558898/118852487-81cd5c00-b8db-11eb-8c40-de2e1ae2a458.png)
-
-
-https://user-images.githubusercontent.com/23558898/118852692-ab868300-b8db-11eb-9f79-9c9e76c96f76.mp4
-
-
-https://user-images.githubusercontent.com/23558898/118852714-ae817380-b8db-11eb-8217-cbb1f810175e.mp4
-
-
-
-For more details why you need this and how to implement it: https://forum.unity.com/threads/executing-first-scene-in-build-settings-when-pressing-play-button-in-editor.157502/
+Editor-only tool intended to streamline your workflow when using Persistent/initial/loader/boot/bootstrap (you name it) scenes.
+<br>
 
 Features:
+ + Load specificed scenes before any other when entering playmode.
  + Persist hierarchy state(selected and expanded objects) on entering/exiting playmode.
  + Convinient settings UI located in ProjectSettings window.
  + UPM support, simple install.
- + Highly extendable for any project.
+ + Highly extendable for your project.
 
 Dependencies:
  + Unity 2019.4+ (uses SerializeReference attribute, [docs](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/SerializeReference.html))
@@ -30,78 +15,80 @@ Dependencies:
 
 Notes:
  - Does not yet support the new UITK-based hierarchy introduced in Unity 6.3 LTS.
+ - This is **Editor-only**, will not build into a runtime build.
+
+![image](https://user-images.githubusercontent.com/23558898/118852487-81cd5c00-b8db-11eb-8c40-de2e1ae2a458.png)
+
+https://user-images.githubusercontent.com/23558898/118852692-ab868300-b8db-11eb-9f79-9c9e76c96f76.mp4
+
+https://user-images.githubusercontent.com/23558898/118852714-ae817380-b8db-11eb-8217-cbb1f810175e.mp4
 
 ## Installation
-Install via git url by adding this entry in your **manifest.json**
+Install via git url by adding this entry into your **manifest.json**
 
-`"com.ems.main-scene-auto-loading": "https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm"`
+`"com.emreedev.scenebootstrapper": "https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper.git#upm"`
 
-Or using PackageManager window:
-1. copy this link `https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm`,
+Or using the PackageManager window:
+1. copy this link `https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper.git#upm`,
 2. open PackageManager window,
 3. click `+` button in top-left corner,
 4. select `Add package from git URL`,
-5. in appeared field paste the link you copied before (`https://github.com/EmreDogann/unity-main-scene-auto-loading.git#upm`).
+5. in appeared field paste the link you copied before (`https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper.git#upm`).
 
 ## How it works
-After installing this package it will create `Assets/MainSceneAutoLoadingSettings.asset` asset. You can change settings by selecting this asset or by using ProjectSettings window.
+After installing this package it will create `Assets/SceneBootstrapperSettings.asset`. Plugin settings can be changed by selecting this asset or by using ProjectSettings window.
 
-`MainSceneAutoLoader` listens for play button click. When this happens it asks `MainSceneProvider` for main scene and sets the `EditorSceneManager.playModeStartScene`([docs](https://docs.unity3d.com/ScriptReference/SceneManagement.EditorSceneManager-playModeStartScene.html)) to received value. After that Unity directly loads specified scene by itself.
+`Scene Bootstrapper` works upon playmode changes only:
+- `SceneProvider` is the system that will determine which scene to return when the plugin asks for the "bootstrap" scene.
+- `SceneLoadedHandler` decides what to do after the bootstrap scene has loaded.
+- `PlaymodeExitHandler` decides what to do after exiting playmode.
+- **On Playmode Enter:** `SceneProvider` asks for the bootstrap scene and sets  `EditorSceneManager.playModeStartScene`([docs](https://docs.unity3d.com/ScriptReference/SceneManagement.EditorSceneManager-playModeStartScene.html)) with specified scene. This will load the scene before any others.
+  - When the bootstrap scene is loaded, `SceneLoadedHandler` is notified with additional information about preveiously opened scenes.
+- **On Playmode Exit:** `SceneProvider` notifies `PlaymodeExitHandler`.
+- You also have the option to save and restore hierarchy settings between playmode sessions.
 
-When main scene loaded `MainSceneLoadedHandler` receives notification with additional information about preveiously opened scenes, selected and expanded objects. This handler decides what to do with provided arguments. Default handler will load all previously loaded scenes.
+### Available Defaults
+Scene Providers:
+- `First Scene In Build Settings`: Will always bootstrap the scene listed as first (index 0) in the build settings options.
+- `Specified Scene Asset`: Allows you to pick from the project browser any scene asset.
+- Or, a custom provider (see [Extending](#Extending) section below).
 
-`MainSceneAutoLoader` also listens for exiting playmode. It will notify `PlaymodeExitedHandler` when editor fully exited playmode. Default handler will restore previously opened scenes, selected and expanded objects. 
+Scene Loaded Handlers:
+- `Load All Loaded Scenes (Additive)`: Loads all scenes that were loaded in the hierarchy before entering playmode.
+- `Load All Loaded Scenes`: Similar to `Load All Loaded Scenes (Additive)`, but will load them non-additively. Loads the active scene first.
+- `Load Active Scene`: Loads only the active scene in the hierarchy.
+- `Load Active Scene (Additive)`: Similar to `Load Active Scene`, but additively loads only the active scene in the hierarchy.
+- `Delegate To In Scene Implementations`: Will find and call all scene loaded handlers in the active scene.
 
+Playmode Exit Handlers:
+- `Restore Scene Manager Setup`: Does nothing. Intended as a blank slate you can use to extend functionality from here.
 
 ## Extending
 For now, there are 3 ways to extend:
- + IMainSceneProvider
- + IMainSceneLoadedHandler
- + IPlaymodeExitedHandler
+ + SceneProvider
+ + SceneLoadedHandler
+ + IPlaymodeExitHandler
 
-Main thing to remember - all extended scripts should be in editor assemblies! e.g. under `Editor` folder or within editor .asmdef
+**Main thing to remember - all extended scripts should be in editor assemblies! e.g. under `Editor` folder or within editor .asmdef**
 
-### IMainSceneProvider
-Responsible for providing the main scene, that will be loaded first when entering playmode. It's quite simple:
+### ISceneProvider
+Responsible for providing the bootstrap scene, that will be loaded first when entering playmode:
 ```c#
-public interface IMainSceneProvider
+public interface ISceneProvider
 {
     SceneAsset Get();
 }
 ```
 
-To implement your own realization you just need to derive from this interface. Remember to place this script under Editor folder.
-```c#
-using SaG.MainSceneAutoLoading.MainSceneProviders;
-using UnityEditor;
-using UnityEngine;
+An example of implementing your own is shown in the sample code ([Sample_SceneProvider.cs](https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper/blob/main/Assets/Sample_SceneProvider.cs)).
 
-public class Sample_MainSceneProvider : IMainSceneProvider
-{
-    [SerializeField]
-    private bool _setting1;
-
-    [SerializeField]
-    private int _setting2;
-
-    [SerializeField]
-    private Object _setting3;
-
-    public SceneAsset Get()
-    {
-        // implementation
-        throw new System.NotImplementedException();
-    }
-}
-```
-
-And after that you could find your option in settings's dropdown:
+After that you could find your option in settings's dropdown:
 ![image](https://user-images.githubusercontent.com/23558898/118925561-9a735b80-b947-11eb-915e-74811f5f99a9.png)
 
-Also, you could write custom property drawer if you'd like to remove setting's folding and provide additional information:
+You could also write a custom property drawer if you'd like:
 ```c#
-[CustomPropertyDrawer(typeof(Sample_MainSceneProvider))]
-public class Sample_MainSceneProviderPropertyDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(Sample_SceneProvider))]
+public class Sample_SceneProviderPropertyDrawer : PropertyDrawer
 {
     private const int FieldsCount = 4;
     private const int FieldHeightSelf = 18;
@@ -134,49 +121,41 @@ public class Sample_MainSceneProviderPropertyDrawer : PropertyDrawer
 ```
 ![image](https://user-images.githubusercontent.com/23558898/118938973-e0382000-b957-11eb-8b88-aa9bbfc0de7e.png)
 
-### IMainSceneLoadedHandler
+### ISceneLoadedHandler
 
 The same as above, just implement this interface and you are good to go.
 
-However, you could also create an in-scnene handler and combine with DelegateToInSceneImplementations option.
+However, you could also create an in-scnene handler and combine with the `Delegate To In Scene Implementations` scene provider.
 ```c#
-#if UNITY_EDITOR // this script should not be present in builds
+// This script should not be present in builds!
+#if UNITY_EDITOR
 using System.Collections;
-using SaG.MainSceneAutoLoading;
-using SaG.MainSceneAutoLoading.MainSceneLoadedHandlers;
-using SaG.MainSceneAutoLoading.Utilities;
+using EmreeDev.SceneBootstrapper;
+using EmreeDev.SceneBootstrapper.SceneLoadedHandlers;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InSceneMainSceneLoadedHandler : MonoBehaviour, IMainSceneLoadedHandler
+public class InGameSceneLoadedHandler : MonoBehaviour, ISceneLoadedHandler
 {
-    public void OnMainSceneLoaded(LoadMainSceneArgs args)
+    public void OnSceneLoaded(SceneBootstrapperData bootstrapperData)
     {
-        Debug.Log($"OnMainSceneLoaded! Now decide what to do with args.SceneSetups...");
-        StartCoroutine(LoadDesiredScenes(args));
+        Debug.Log("OnSceneLoaded! Now decide what to do with bootstrapperData.SceneSetups...");
+        StartCoroutine(LoadDesiredScenes(bootstrapperData));
     }
 
-    IEnumerator LoadDesiredScenes(LoadMainSceneArgs args)
+    private IEnumerator LoadDesiredScenes(SceneBootstrapperData bootstrapperData)
     {
         yield return new WaitForSeconds(1f);
-        foreach (var sceneSetup in args.SceneSetups)
+        foreach (SceneSetup sceneSetup in bootstrapperData.SceneSetups)
         {
             SceneManager.LoadScene(sceneSetup.path, LoadSceneMode.Additive);
         }
-
-        // call this to restore previously selected and expanded GameObjects 
-        SceneHierarchyStateUtility.RestoreHierarchyState(args);
     }
 }
 #endif
+
 ```
 
 ### IPlaymodeExitedHandler
-
-Look at the default implementation:
-https://github.com/EmreDogann/unity-main-scene-auto-loading/blob/main/Packages/SaG.MainSceneAutoLoading/Editor/PlaymodeExitedHandlers/RestoreSceneManagerSetup.cs
-
-# Fork Changes
-## 12th January 2026
-- Updated project to support Unity 6.2+
-- Optimized hierarchy lookup logic
+Look at the default empty implementation [RestoreSceneManagerSetup](https://github.com/EmreDogann/Unity-Editor-Scene-Bootstrapper/blob/main/Packages/com.EmreeDev.SceneBootstrapper/Editor/PlaymodeExitHandlers/RestoreSceneManagerSetup.cs).
