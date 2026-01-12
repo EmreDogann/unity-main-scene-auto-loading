@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Ems.MainSceneAutoLoading.Utilities
 {
@@ -16,6 +16,7 @@ namespace Ems.MainSceneAutoLoading.Utilities
     public static class SceneHierarchyUtility
     {
         private static Func<object, object> _sceneHierarchyGetter;
+        private static Func<object> _lastActiveHierarchyWindowGetter;
         private static Func<object, List<GameObject>> _expandedGameObjectGetter;
         private static Func<object, List<string>> _expandedSceneNamesGetter;
 #if UNITY_6000_2_OR_NEWER
@@ -24,15 +25,17 @@ namespace Ems.MainSceneAutoLoading.Utilities
         private static Action<object, int, bool> _setExpandedMethod;
 #endif
         private static Action<object, List<string>> _setScenesExpandedMethod;
+        private static Type _hierarchyWindowType;
 
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
             Type sceneHierarchyType = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchy");
-            Type sceneHierarchyWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
-
-            _sceneHierarchyGetter = ReflectionUtility.BuildPropertyGetter<object, object>(sceneHierarchyWindowType,
+            _hierarchyWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
+            _sceneHierarchyGetter = ReflectionUtility.BuildPropertyGetter<object, object>(_hierarchyWindowType,
                 "sceneHierarchy", BindingFlags.Public | BindingFlags.Instance);
+            _lastActiveHierarchyWindowGetter = ReflectionUtility.BuildPropertyGetter<object>(
+                _hierarchyWindowType, "lastInteractedHierarchyWindow", BindingFlags.Public | BindingFlags.Static);
 
             _expandedGameObjectGetter = ReflectionUtility.BuildMethodInvoker<object, List<GameObject>>(
                 sceneHierarchyType, "GetExpandedGameObjects", BindingFlags.Public | BindingFlags.Instance);
@@ -104,24 +107,9 @@ namespace Ems.MainSceneAutoLoading.Utilities
             return null;
         }
 
-        public static bool HasOpenInstances(Type t)
-        {
-            var objectsOfTypeAll = Resources.FindObjectsOfTypeAll(t);
-            return objectsOfTypeAll != null && objectsOfTypeAll.Length != 0;
-        }
-
         private static EditorWindow GetHierarchyWindow()
         {
-            if (HasOpenInstances(typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow")))
-            {
-                // Execute the hierarchy open command, so that we can retrieve it via focusedWindow.
-                EditorApplication.ExecuteMenuItem("Window/General/Hierarchy");
-                return EditorWindow.focusedWindow;
-            }
-
-            return null;
-            // Type windowType = typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
-            // return EditorWindow.GetWindow(windowType);
+            return _lastActiveHierarchyWindowGetter() as EditorWindow;
         }
 
         public static List<string> GetExpandedSceneNames()

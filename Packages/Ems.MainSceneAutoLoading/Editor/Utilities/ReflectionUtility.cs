@@ -19,21 +19,45 @@ namespace Ems.MainSceneAutoLoading.Utilities
         {
             ParameterExpression instanceParam = Expression.Parameter(typeof(T), "t");
 
-            Expression instanceExpr = instanceParam;
-            // Cast the instance from "object" to the correct type.
-            if (typeof(T) == typeof(object))
+            Expression instanceExpr = null;
+            if ((bindingFlags & BindingFlags.Static) != BindingFlags.Static)
             {
-                instanceExpr = Expression.TypeAs(instanceParam, type);
+                // Cast the instance from "object" to the correct type.
+                if (typeof(T) == typeof(object))
+                {
+                    instanceExpr = Expression.TypeAs(instanceParam, type);
+                }
             }
 
-            MemberInfo memberInfo = type.GetProperty(memberName, bindingFlags);
+            MemberInfo propertyInfo = type.GetProperty(memberName, bindingFlags);
             // t.[PropertyName]
-            MemberExpression memberAccessExpr = Expression.MakeMemberAccess(instanceExpr, memberInfo);
+            MemberExpression propertyAccessExpr = Expression.MakeMemberAccess(instanceExpr, propertyInfo);
 
             // Convert the return value to the correct type: Convert(t.PropertyName, typeof(U))
-            UnaryExpression returnConvert = Expression.Convert(memberAccessExpr, typeof(U));
+            UnaryExpression returnConvert = Expression.Convert(propertyAccessExpr, typeof(U));
 
             var lambda = Expression.Lambda<Func<T, U>>(returnConvert, instanceParam);
+            return lambda.Compile();
+        }
+
+        /// <summary>
+        ///     Compile a lambda that will invoke the specified property's static getter and return the value.
+        /// </summary>
+        /// <param name="type">The type of the instance the property is defined in.</param>
+        /// <param name="memberName">The name of the property member.</param>
+        /// <param name="bindingFlags">The flags used to find the property.</param>
+        /// <typeparam name="T">The return value type (use 'object' if unknown at compile-time).</typeparam>
+        /// <returns>Lambda which can be invoked like a normal function. (e.g. lambdaName(instance))</returns>
+        public static Func<T> BuildPropertyGetter<T>(Type type, string memberName, BindingFlags bindingFlags)
+        {
+            MemberInfo propertyInfo = type.GetProperty(memberName, bindingFlags);
+            // t.[PropertyName]
+            MemberExpression propertyAccessExpr = Expression.MakeMemberAccess(null, propertyInfo);
+
+            // Convert the return value to the correct type: Convert(t.PropertyName, typeof(T))
+            UnaryExpression returnConvert = Expression.Convert(propertyAccessExpr, typeof(T));
+
+            var lambda = Expression.Lambda<Func<T>>(returnConvert, null);
             return lambda.Compile();
         }
 
