@@ -10,8 +10,8 @@ Features:
  + Highly extendable for your project.
 
 Dependencies:
- + Unity 2019.4+ (uses SerializeReference attribute, [docs](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/SerializeReference.html))
- + EditorCoroutines package, [docs](https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html)
+ + Unity 2019.4+ (uses [SerializeReference](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/SerializeReference.html) attribute)
+ + [EditorCoroutines](https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html) package
 
 Notes:
  - Does not yet support the new UITK-based hierarchy introduced in Unity 6.3 LTS.
