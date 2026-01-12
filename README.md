@@ -1,3 +1,6 @@
+# Fork Updates
+See [Fork Changes](#Fork-Changes) section below for details.
+
 # Main Scene Auto Loading
 Main, initial, loader, boot, bootstrap - you name it.
 
@@ -25,6 +28,8 @@ Dependencies:
  + Unity 2019.4+ (uses SerializeReference attribute, [docs](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/SerializeReference.html))
  + EditorCoroutines package, [docs](https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html)
 
+Notes:
+ - Does not yet support the New UITK-based hierarchy introduced in Unity 6.3 LTS.
 
 ## Installation
 Install via git url by adding this entry in your **manifest.json**
@@ -170,3 +175,8 @@ public class InSceneMainSceneLoadedHandler : MonoBehaviour, IMainSceneLoadedHand
 
 Look at the default implementation:
 https://github.com/EmreDogann/unity-main-scene-auto-loading/blob/main/Packages/SaG.MainSceneAutoLoading/Editor/PlaymodeExitedHandlers/RestoreSceneManagerSetup.cs
+
+# Fork Changes
+## 12th January 2026
+- Updated project to support Unity 6.2+
+- Optimized hierarchy lookup logic
