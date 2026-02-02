@@ -43,6 +43,10 @@ namespace EmreeDev.SceneBootstrapper.Utilities
 
         private static bool IsAnySceneLoaded(SceneSetup[] sceneSetups)
         {
+            if (sceneSetups == null || sceneSetups.Length == 0)
+            {
+                return false;
+            }
             return sceneSetups
                 .Any(s => SceneManager.GetSceneByPath(s.path).isLoaded);
         }
